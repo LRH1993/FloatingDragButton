@@ -35,7 +35,6 @@ public class FloatTouchListener implements View.OnTouchListener {
     private int mDownPointerId;
     private Interpolator mInterpolator;
     private FloatAnimatorUpdateListener mUpdateListener;
-    private View.OnTouchListener mOnTouchListener;
 
     public FloatTouchListener(Context context, Rect boundsInScreen, View floatView,
                               AbsoluteLayout.LayoutParams floatViewWindowParam,int parentMarginTop,int edgePadding){
@@ -91,9 +90,6 @@ public class FloatTouchListener implements View.OnTouchListener {
                 mDownPointerId = MotionEventCompat.getPointerId(event, 0);
                 mPreviousX = event.getRawX();
                 mPreviousY = event.getRawY();
-                if (mOnTouchListener != null) {
-                    mOnTouchListener.onTouch(view, event);
-                }
                 break;
             }
             case MotionEvent.ACTION_MOVE:{
@@ -171,11 +167,6 @@ public class FloatTouchListener implements View.OnTouchListener {
     public void setFloatButtonCallback(FloatButtonCallback floatButtonCallback) {
         this.mFloatButtonCallback = floatButtonCallback;
     }
-    public void setOnTouchListener(View.OnTouchListener onTouchListener) {
-        this.mOnTouchListener = onTouchListener;
-    }
-
-
 
     private class FloatAnimatorUpdateListener implements ValueAnimator.AnimatorUpdateListener {
 
