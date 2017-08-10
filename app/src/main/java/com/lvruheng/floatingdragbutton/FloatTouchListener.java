@@ -85,6 +85,7 @@ public class FloatTouchListener implements View.OnTouchListener {
         if (mFloatButtonCallback != null) {
             mFloatButtonCallback.onTouch();
         }
+        boolean result = false;
         switch (action) {
             case MotionEvent.ACTION_DOWN:{
                 mDownPointerId = MotionEventCompat.getPointerId(event, 0);
@@ -106,6 +107,7 @@ public class FloatTouchListener implements View.OnTouchListener {
                         }
                         mFloatView.requestLayout();
                         mHasMoved = true;
+                        result = true;
                     }
                 }
                 break;
@@ -155,7 +157,7 @@ public class FloatTouchListener implements View.OnTouchListener {
                 break;
             }
         }
-        return true;
+        return result;
     }
 
 

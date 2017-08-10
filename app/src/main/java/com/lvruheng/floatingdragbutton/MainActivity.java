@@ -10,9 +10,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.AbsoluteLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -24,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private FloatTouchListener mFloatTouchListener;
     private Rect mFloatViewBoundsInScreens;
     private int mEdgePadding;
-    private FloatBtnAnimatorTouch mFloatBtnAnimatorTouch;
+    private ImageView mImageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void addFloatBtn() {
         mFloatBtnWrapper = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.float_btn,null,false);
+        mImageView = (ImageView) mFloatBtnWrapper.findViewById(R.id.iv_shine);
         mFloatBtnWindowParams = new AbsoluteLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0, 0);
         mFloatRootView = new AbsoluteLayout(this);
         mMainLayout.addView(mFloatRootView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -78,8 +82,16 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 mFloatRootView.setOnTouchListener(mFloatTouchListener);
-                mFloatBtnAnimatorTouch = new FloatBtnAnimatorTouch();
-                mFloatTouchListener.setOnTouchListener(mFloatBtnAnimatorTouch);
+                mFloatRootView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        RotateAnimation rotateAnimation = new RotateAnimation(0,360,Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                        rotateAnimation.setDuration(1000);
+                        rotateAnimation.setRepeatCount(3);
+                        mImageView.startAnimation(rotateAnimation);
+                        Toast.makeText(MainActivity.this,"点击展现效果",Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
